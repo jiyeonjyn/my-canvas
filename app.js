@@ -68,7 +68,7 @@ canvas.addEventListener("touchend", stopPainting);
 const rangeLabel = document.getElementById("js-label"),
     lineRange = document.getElementById("js-line");
 
-function changeBrushSize() {
+function changeBrushSize(e) {
     ctx.lineWidth = lineRange.value; 
     rangeLabel.innerText = Number(lineRange.value).toFixed(1); //정수 뒤에 .0을 붙이기 위해
     const labelPosition = lineRange.value/lineRange.max * 135;
