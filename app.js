@@ -42,8 +42,8 @@ function stopPainting() {
 function onTouchMove(e) {
     e.preventDefault();
     const touch = e.touches[0];
-    const x = touch.offsetX;
-    const y = touch.offsetY;
+    const x = touch.pageX;
+    const y = touch.pageY;
     if (painting) {
         ctx.lineTo(x, y);
         ctx.stroke();
