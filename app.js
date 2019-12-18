@@ -16,6 +16,7 @@ function init() {
 }
 
 function onMouseMove(e) {
+    e.preventDefault();
     const x = e.offsetX;
     const y = e.offsetY;
     if (painting) {
