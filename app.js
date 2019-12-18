@@ -48,11 +48,11 @@ function onTouchMove(e) {
     const x = touch.clientX;
     const y = touch.clientY;
     if (painting) {
-        ctx.lineTo(x, y);
+        ctx.lineTo(lastPt.x, lastPt.y);
         ctx.stroke();
     } else {
         ctx.beginPath();
-        ctx.moveTo(x, y);
+        ctx.moveTo(lastPt.x, lastPt.y);
     }
 }
 
