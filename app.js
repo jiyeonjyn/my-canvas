@@ -55,13 +55,16 @@ function stopPainting(e) {
 
 function onTouchMove(e) {
     e.preventDefault();
-    const x = e.touches[0].pageX,
-        y = e.touches[0].pageY;
+    const x = e.pageX;
+    const y = e.pageY;
+    if (painting) {
+        ctx.lineTo(x, y);
+        ctx.stroke();
+    } else {
+        ctx.beginPath();
+        ctx.moveTo(lastPt.x, lastPt.y);
+    }
     lastPt = {x, y};
-    ctx.beginPath();
-    ctx.moveTo(lastPt.x, lastPt.y);
-    ctx.lineTo(x, y);
-    ctx.stroke();
 }
 
 init();

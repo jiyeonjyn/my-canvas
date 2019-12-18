@@ -82,3 +82,24 @@ canvas.mobile {
     box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
     border-radius: 25px;
 }
+
+@media (min-width: 700px) {
+    /* body > * {
+        margin: 0;
+    }
+
+    canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        margin: 0;
+    }
+
+    .colors {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 10;
+    } */
+}
