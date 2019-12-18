@@ -2,17 +2,18 @@
 const canvas = document.getElementById("js-canvas"),
     ctx = canvas.getContext("2d");
 
-let painting = false, filling = false;
+let painting = false, filling = false, lastPt = {};
 
 //width, height를 css가 아닌 엘리먼트 속성으로 정의해 주어야 작동함.
-canvas.width = 700; 
-canvas.height = 700;
-
 function setCanvasSize() {
     if (window.innerWidth < 700 ) {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         canvas.classList.add("mobile");
+    } else {
+        canvas.width = 700; 
+        canvas.height = 700;
+        canvas.classList.remove("mobile");
     }
 }
 window.addEventListener("resize", setCanvasSize);
@@ -55,15 +56,13 @@ function stopPainting(e) {
 function onTouchMove(e) {
     e.preventDefault();
     const touch = e.touches[0];
-    const x = touch.clientX;
-    const y = touch.clientY;
-    if (painting) {
-        ctx.lineTo(x, y);
-        ctx.stroke();
-    } else {
-        ctx.beginPath();
-        ctx.moveTo(lastPt.x, lastPt.y);
-    }
+    const x = touch.pageX;
+    const y = touch.pageY;
+    ctx.beginPath();
+    ctx.moveTo(lastPt.x, lastPt.y);
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    lastPt = {x, y}
 }
 
 init();
