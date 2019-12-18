@@ -52,7 +52,7 @@ const rangeLabel = document.getElementById("js-label"),
 
 function changeBrushSize() {
     ctx.lineWidth = lineRange.value; 
-    rangeLabel.innerText = Number(lineRange.value).toFixed(1);
+    rangeLabel.innerText = Number(lineRange.value).toFixed(1); //정수 뒤에 .0을 붙이기 위해
     const labelPosition = lineRange.value/lineRange.max * 135;
     rangeLabel.style.transform =`translateX(${labelPosition}px)`;
 }
