@@ -8,7 +8,14 @@ let painting = false, filling = false;
 canvas.width = 700; 
 canvas.height = 700;
 
+function setCanvasSize() {
+    if (window.innerWidth < 700 )
+        canvas.width = window.innerWidth;
+}
+window.addEventListener("resize", setCanvasSize);
+
 function init() {
+    setCanvasSize();
     ctx.strokeStyle = "#2c2c2c";
     ctx.lineWidth="2.5";
     ctx.fillStyle = "#ffffff";
@@ -48,7 +55,7 @@ function onTouchMove(e) {
     const x = touch.clientX;
     const y = touch.clientY;
     if (painting) {
-        ctx.lineTo(lastPt.x, lastPt.y);
+        ctx.lineTo(x, y);
         ctx.stroke();
     } else {
         ctx.beginPath();
