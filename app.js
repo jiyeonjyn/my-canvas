@@ -44,6 +44,10 @@ canvas.addEventListener("mousemove", onMouseMove);
 canvas.addEventListener("mousedown", onMouseDown);
 canvas.addEventListener("mouseup", stopPainting);
 canvas.addEventListener("mouseleave", stopPainting);
+//mobile
+canvas.addEventListener("touchmove", onMouseMove);
+canvas.addEventListener("touchstart", onMouseDown);
+canvas.addEventListener("touchend", stopPainting);
 
 
 //change lineWidth
@@ -68,6 +72,8 @@ function hideLabel() {
 changeBrushSize();
 lineRange.addEventListener("mouseenter", showLabel);
 lineRange.addEventListener("mouseleave", hideLabel);
+lineRange.addEventListener("touchstart", showLabel);
+lineRange.addEventListener("touchend", hideLabel);
 lineRange.addEventListener("input", changeBrushSize);
 
 
@@ -95,7 +101,7 @@ function reset() {
 }
 
 function save() {
-    const image = canvas.toDataURL();
+    const image = canvas.toDataURL(); //canvas.toDataURL(type, encoderOptions) type의 default는 "image/png"
     const link = document.createElement("a");
     link.href = image;
     link.download = "painting";
