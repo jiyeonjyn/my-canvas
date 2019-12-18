@@ -57,13 +57,11 @@ function onTouchMove(e) {
     e.preventDefault();
     const x = e.touches[0].pageX,
         y = e.touches[0].pageY;
-    if (lastPt) {
-        ctx.beginPath();
-        ctx.moveTo(lastPt.x, lastPt.y);
-        ctx.lineTo(x, y);
-        ctx.stroke();
-    }
     lastPt = {x, y};
+    ctx.beginPath();
+    ctx.moveTo(lastPt.x, lastPt.y);
+    ctx.lineTo(x, y);
+    ctx.stroke();
 }
 
 init();
