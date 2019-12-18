@@ -27,7 +27,8 @@ function onMouseMove(e) {
     }
 }
 
-function onMouseDown() {
+function onMouseDown(e) {
+    e.preventDefault();
     if (!filling) {
         painting = true;
     } else {
@@ -35,17 +36,19 @@ function onMouseDown() {
     }
 }
 
-function stopPainting() {
+function stopPainting(e) {
+    e.preventDefault();
     painting = false;
+    lastPt = null;
 }
 
 function onTouchMove(e) {
     e.preventDefault();
     const touch = e.touches[0];
-    const x = touch.pageX;
-    const y = touch.pageY;
+    const x = touch.clientX;
+    const y = touch.clientY;
     if (painting) {
-        ctx.lineTo(x, y);
+        ctx.lineTo(lastPt.x, lastPt.y);
         ctx.stroke();
     } else {
         ctx.beginPath();
