@@ -15,7 +15,7 @@ function init() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-function onMouseMove() {
+function onMouseMove(e) {
     const x = e.offsetX;
     const y = e.offsetY;
     if (painting) {
@@ -68,7 +68,7 @@ canvas.addEventListener("touchend", stopPainting);
 const rangeLabel = document.getElementById("js-label"),
     lineRange = document.getElementById("js-line");
 
-function changeBrushSize(e) {
+function changeBrushSize() {
     ctx.lineWidth = lineRange.value; 
     rangeLabel.innerText = Number(lineRange.value).toFixed(1); //정수 뒤에 .0을 붙이기 위해
     const labelPosition = lineRange.value/lineRange.max * 135;
