@@ -15,8 +15,7 @@ function init() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-function onMouseMove(e) {
-    e.preventDefault();
+function onMouseMove() {
     const x = e.offsetX;
     const y = e.offsetY;
     if (painting) {
@@ -28,8 +27,7 @@ function onMouseMove(e) {
     }
 }
 
-function onMouseDown(e) {
-    e.preventDefault();
+function onMouseDown() {
     if (!filling) {
         painting = true;
     } else {
@@ -37,9 +35,22 @@ function onMouseDown(e) {
     }
 }
 
-function stopPainting(e) {
-    e.preventDefault();
+function stopPainting() {
     painting = false;
+}
+
+function onTouchMove(e) {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const x = touch.offsetX;
+    const y = touch.offsetY;
+    if (painting) {
+        ctx.lineTo(x, y);
+        ctx.stroke();
+    } else {
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+    }
 }
 
 init();
@@ -48,7 +59,7 @@ canvas.addEventListener("mousedown", onMouseDown);
 canvas.addEventListener("mouseup", stopPainting);
 canvas.addEventListener("mouseleave", stopPainting);
 //mobile
-canvas.addEventListener("touchmove", onMouseMove);
+canvas.addEventListener("touchmove", onTouchMove);
 canvas.addEventListener("touchstart", onMouseDown);
 canvas.addEventListener("touchend", stopPainting);
 
