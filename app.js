@@ -9,8 +9,11 @@ canvas.width = 700;
 canvas.height = 700;
 
 function setCanvasSize() {
-    if (window.innerWidth < 700 )
+    if (window.innerWidth < 700 ) {
         canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        canvas.classList.add("mobile");
+    }
 }
 window.addEventListener("resize", setCanvasSize);
 

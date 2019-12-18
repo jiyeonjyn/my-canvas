@@ -13,6 +13,12 @@ canvas {
     background-color: white;
 }
 
+canvas.mobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
 .label {
     color: rgb(109, 109, 109);
     font-size: 0.8rem;
