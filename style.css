@@ -68,7 +68,7 @@ canvas {
 
 .colors {
     display: flex;
-    margin-top: 40px;
+    margin: 40px 0;
 }
 
 .color {
