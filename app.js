@@ -28,7 +28,8 @@ function onMouseMove(e) {
     }
 }
 
-function onMouseDown() {
+function onMouseDown(e) {
+    e.preventDefault();
     if (!filling) {
         painting = true;
     } else {
@@ -36,7 +37,8 @@ function onMouseDown() {
     }
 }
 
-function stopPainting() {
+function stopPainting(e) {
+    e.preventDefault();
     painting = false;
 }
 
