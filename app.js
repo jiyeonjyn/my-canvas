@@ -9,11 +9,9 @@ function setCanvasSize() {
     if (window.innerWidth < 700 ) {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        canvas.classList.add("mobile");
     } else {
         canvas.width = 700; 
         canvas.height = 700;
-        canvas.classList.remove("mobile");
     }
 }
 window.addEventListener("resize", setCanvasSize);
@@ -86,7 +84,7 @@ canvas.addEventListener("touchend", onTouchEnd);
 
 //change lineWidth
 const rangeLabel = document.getElementById("js-label"),
-    lineRange = document.getElementById("js-line");
+    lineRange = document.getElementById("js-range");
 
 function changeBrushSize() {
     ctx.lineWidth = lineRange.value; 
