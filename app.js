@@ -16,7 +16,6 @@ function setCanvasSize() {
 }
 window.addEventListener("resize", setCanvasSize);
 
-//초기값 지정
 function init() {
     setCanvasSize();
     ctx.strokeStyle = "#2c2c2c";
@@ -53,10 +52,12 @@ function stopPainting() {
 
 function onTouchMove(e) {
     e.preventDefault();
-    const x = e.touches[0].pageX;
-    const y = e.touches[0].pageY;
-    ctx.lineTo(x, y);
-    ctx.stroke();
+    if (mode !== "filling") {
+        const x = e.touches[0].pageX;
+        const y = e.touches[0].pageY;
+        ctx.lineTo(x, y);
+        ctx.stroke();
+    }
 }
 
 function onTouchStart(e) {
@@ -121,13 +122,13 @@ const modeBtn = document.getElementById("js-mode"),
 
 let lastPenColor;
 
-function setErasing() {
+function setErasingMode() {
     lastPenColor = ctx.strokeStyle;
     ctx.lineWidth = "20";
     ctx.strokeStyle = currentCanvasColor;
 }
 
-function setPainting() {
+function setPaintingMode() {
     ctx.lineWidth = lineRange.value;
     ctx.strokeStyle = lastPenColor;
 }
@@ -139,20 +140,23 @@ function changeMode() {
     } else if (mode === "filling") {
         mode = "erasing";
         modeBtn.innerText = "Erasing";
-        setErasing();
+        setErasingMode();
     } else {
         mode = "painting"
         modeBtn.innerText = "Painting";
-        setPainting();
+        setPaintingMode();
     }
 }
 
 function reset() {
+    mode = "painting"
+    modeBtn.innerText = "Painting";
     ctx.strokeStyle = "#2c2c2c";
     lineRange.value = 2.5;
     changeBrushSize();
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    currentCanvasColor = ctx.fillStyle;
 }
 
 function save() {
@@ -172,10 +176,9 @@ saveBtn.addEventListener("click", save);
 const colors = Array.from(document.getElementsByClassName("color"));
 
 function changeColor(e) {
-    if (mode === "painting")
+    if (mode !== "erasing")
         ctx.strokeStyle = e.target.style.backgroundColor;
-    else if (mode === "filling")
-        ctx.fillStyle = e.target.style.backgroundColor;
+    ctx.fillStyle = e.target.style.backgroundColor;
 }
 
 colors.forEach(color => color.addEventListener("click", changeColor));
