@@ -2,7 +2,7 @@
 const canvas = document.getElementById("js-canvas"),
     ctx = canvas.getContext("2d");
 
-let painting = false, filling = false, lastPt = null;
+let painting = false, mode = "painting", currentCanvasColor;
 
 //width, height를 css가 아닌 엘리먼트 속성으로 정의해 주어야 작동함.
 function setCanvasSize() {
@@ -22,6 +22,7 @@ function init() {
     ctx.lineWidth="2.5";
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    currentCanvasColor = ctx.fillStyle;
 }
 
 function onMouseMove(e) {
@@ -37,16 +38,16 @@ function onMouseMove(e) {
 }
 
 function onMouseDown() {
-    if (!filling) {
+    if (mode !== "filling") {
         painting = true;
     } else {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
+        currentCanvasColor = ctx.fillStyle;
     }
 }
 
 function stopPainting() {
     painting = false;
-    lastPt = null;
 }
 
 function onTouchMove(e) {
@@ -59,13 +60,14 @@ function onTouchMove(e) {
 
 function onTouchStart(e) {
     e.preventDefault();
-    if (!filling) {
+    if (mode !== "filling") {
         const x = e.touches[0].pageX;
         const y = e.touches[0].pageY;
         ctx.beginPath();
         ctx.moveTo(x, y);
     } else {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
+        currentCanvasColor = ctx.fillStyle;
     }
 }
 
@@ -116,13 +118,31 @@ const modeBtn = document.getElementById("js-mode"),
     resetBtn = document.getElementById("js-reset"),
     saveBtn = document.getElementById("js-save");
 
+let lastPenColor;
+
+function setErasing() {
+    lastPenColor = ctx.strokeStyle;
+    ctx.lineWidth = "20";
+    ctx.strokeStyle = currentCanvasColor;
+}
+
+function setPainting() {
+    ctx.lineWidth = lineRange.value;
+    ctx.strokeStyle = lastPenColor;
+}
+
 function changeMode() {
-    if (filling) {
-        filling = false;
-        modeBtn.innerText = "Paint Mode";
+    if (mode === "painting") {
+        mode = "filling";
+        modeBtn.innerText = "Filling";
+    } else if (mode === "filling") {
+        mode = "erasing";
+        modeBtn.innerText = "Erasing";
+        setErasing();
     } else {
-        filling = true;
-        modeBtn.innerText = "Fill Mode";
+        mode = "painting"
+        modeBtn.innerText = "Painting";
+        setPainting();
     }
 }
 
@@ -135,7 +155,7 @@ function reset() {
 }
 
 function save() {
-    const image = canvas.toDataURL("image/png"); //canvas.toDataURL(type, encoderOptions) type의 default는 "image/png"
+    const image = canvas.toDataURL(); //canvas.toDataURL(type, encoderOptions) type의 default는 "image/png"
     const link = document.createElement("a");
     link.href = image;
     link.download = "painting";
@@ -151,7 +171,8 @@ saveBtn.addEventListener("click", save);
 const colors = Array.from(document.getElementsByClassName("color"));
 
 function changeColor(e) {
-    ctx.strokeStyle = e.target.style.backgroundColor;
+    if (mode === "painting")
+        ctx.strokeStyle = e.target.style.backgroundColor;
     ctx.fillStyle = e.target.style.backgroundColor;
 }
 
