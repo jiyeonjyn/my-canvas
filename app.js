@@ -13,6 +13,7 @@ function setCanvasSize() {
         canvas.width = 700; 
         canvas.height = 700;
     }
+    ctx.fillStyle = "#ffffff"; //resize시 fillStyle이 #000000으로 바뀌는 버그 수정
 }
 window.addEventListener("resize", setCanvasSize);
 
