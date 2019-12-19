@@ -16,6 +16,7 @@ function setCanvasSize() {
 }
 window.addEventListener("resize", setCanvasSize);
 
+//초기값 지정
 function init() {
     setCanvasSize();
     ctx.strokeStyle = "#2c2c2c";
@@ -176,9 +177,10 @@ saveBtn.addEventListener("click", save);
 const colors = Array.from(document.getElementsByClassName("color"));
 
 function changeColor(e) {
-    if (mode !== "erasing")
+    if (mode === "painting")
         ctx.strokeStyle = e.target.style.backgroundColor;
-    ctx.fillStyle = e.target.style.backgroundColor;
+    else if (mode === "filling")
+        ctx.fillStyle = e.target.style.backgroundColor;
 }
 
 colors.forEach(color => color.addEventListener("click", changeColor));
