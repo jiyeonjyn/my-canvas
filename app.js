@@ -51,24 +51,22 @@ function stopPainting() {
 
 function onTouchMove(e) {
     e.preventDefault();
-    const x = e.pageX;
-    const y = e.pageY;
-    if (lastPt) {
-        ctx.beginPath();
-        ctx.moveTo(lastPt.x, lastPt.y);
-        ctx.lineTo(x, y);
-        ctx.stroke();
-    }
-    lastPt = {x, y};
+    const x = e.touches[0].pageX;
+    const y = e.touches[0].pageY;
+    ctx.lineTo(x, y);
+    ctx.stroke();
 }
 
 function onTouchStart(e) {
     e.preventDefault();
+    const x = e.touches[0].pageX;
+    const y = e.touches[0].pageY;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
 }
 
 function onTouchEnd(e) {
     e.preventDefault();
-    lastPt = null;
 }
 
 init();
