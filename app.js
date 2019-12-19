@@ -171,7 +171,7 @@ saveBtn.addEventListener("click", save);
 const colors = Array.from(document.getElementsByClassName("color"));
 
 function changeColor(e) {
-    if (mode === "painting")
+    if (mode !== "erasing")
         ctx.strokeStyle = e.target.style.backgroundColor;
     ctx.fillStyle = e.target.style.backgroundColor;
 }
