@@ -155,6 +155,7 @@ function changeMode() {
 function reset() {
     mode = "painting"
     modeBtn.innerText = "Painting";
+    lineRange.disabled = false;
     ctx.strokeStyle = "#2c2c2c";
     lineRange.value = 2.5;
     changeBrushSize();
