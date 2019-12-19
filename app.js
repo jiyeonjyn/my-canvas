@@ -59,15 +59,19 @@ function onTouchMove(e) {
 
 function onTouchStart(e) {
     e.preventDefault();
-    const x = e.touches[0].pageX;
-    const y = e.touches[0].pageY;
-    ctx.beginPath();
-    ctx.moveTo(x, y);
+    if (!filling) {
+        const x = e.touches[0].pageX;
+        const y = e.touches[0].pageY;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+    } else {
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
 }
 
-function onTouchEnd(e) {
-    e.preventDefault();
-}
+// function onTouchEnd(e) {
+//     e.preventDefault();
+// }
 
 init();
 canvas.addEventListener("mousemove", onMouseMove);
@@ -77,7 +81,7 @@ canvas.addEventListener("mouseleave", stopPainting);
 //mobile
 canvas.addEventListener("touchmove", onTouchMove);
 canvas.addEventListener("touchstart", onTouchStart);
-canvas.addEventListener("touchend", onTouchEnd);
+//canvas.addEventListener("touchend", onTouchEnd);
 
 
 //change lineWidth
