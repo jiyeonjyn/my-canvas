@@ -52,10 +52,12 @@ function stopPainting() {
 
 function onTouchMove(e) {
     e.preventDefault();
-    const x = e.touches[0].pageX;
-    const y = e.touches[0].pageY;
-    ctx.lineTo(x, y);
-    ctx.stroke();
+    if (mode !== "filling") {
+        const x = e.touches[0].pageX;
+        const y = e.touches[0].pageY;
+        ctx.lineTo(x, y);
+        ctx.stroke();
+    }
 }
 
 function onTouchStart(e) {
@@ -120,13 +122,13 @@ const modeBtn = document.getElementById("js-mode"),
 
 let lastPenColor;
 
-function setErasing() {
+function setErasingMode() {
     lastPenColor = ctx.strokeStyle;
     ctx.lineWidth = "20";
     ctx.strokeStyle = currentCanvasColor;
 }
 
-function setPainting() {
+function setPaintingMode() {
     ctx.lineWidth = lineRange.value;
     ctx.strokeStyle = lastPenColor;
 }
@@ -138,20 +140,23 @@ function changeMode() {
     } else if (mode === "filling") {
         mode = "erasing";
         modeBtn.innerText = "Erasing";
-        setErasing();
+        setErasingMode();
     } else {
         mode = "painting"
         modeBtn.innerText = "Painting";
-        setPainting();
+        setPaintingMode();
     }
 }
 
 function reset() {
+    mode = "painting"
+    modeBtn.innerText = "Painting";
     ctx.strokeStyle = "#2c2c2c";
     lineRange.value = 2.5;
     changeBrushSize();
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    currentCanvasColor = ctx.fillStyle;
 }
 
 function save() {
