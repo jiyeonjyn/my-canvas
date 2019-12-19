@@ -60,6 +60,7 @@ function onTouchMove(e) {
         ctx.moveTo(lastPt.x, lastPt.y);
         ctx.lineTo(x, y);
         ctx.stroke();
+    }
     lastPt = {x, y};
 }
 
