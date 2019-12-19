@@ -135,7 +135,7 @@ function reset() {
 }
 
 function save() {
-    const image = canvas.toDataURL(); //canvas.toDataURL(type, encoderOptions) type의 default는 "image/png"
+    const image = canvas.toDataURL("image/png"); //canvas.toDataURL(type, encoderOptions) type의 default는 "image/png"
     const link = document.createElement("a");
     link.href = image;
     link.download = "painting";
