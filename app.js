@@ -125,12 +125,14 @@ const modeBtn = document.getElementById("js-mode"),
 let lastPenColor;
 
 function setErasingMode() {
+    lineRange.disabled = true;
     lastPenColor = ctx.strokeStyle;
     ctx.lineWidth = "20";
     ctx.strokeStyle = currentCanvasColor;
 }
 
 function setPaintingMode() {
+    lineRange.disabled = false;
     ctx.lineWidth = lineRange.value;
     ctx.strokeStyle = lastPenColor;
 }
