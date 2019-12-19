@@ -2,7 +2,7 @@
 const canvas = document.getElementById("js-canvas"),
     ctx = canvas.getContext("2d");
 
-let painting = false, filling = false, lastPt = {};
+let painting = false, filling = false, lastPt = null;
 
 //width, height를 css가 아닌 엘리먼트 속성으로 정의해 주어야 작동함.
 function setCanvasSize() {
@@ -38,8 +38,7 @@ function onMouseMove(e) {
     }
 }
 
-function onMouseDown(e) {
-    e.preventDefault();
+function onMouseDown() {
     if (!filling) {
         painting = true;
     } else {
@@ -47,8 +46,7 @@ function onMouseDown(e) {
     }
 }
 
-function stopPainting(e) {
-    e.preventDefault();
+function stopPainting() {
     painting = false;
     lastPt = null;
 }
@@ -57,14 +55,21 @@ function onTouchMove(e) {
     e.preventDefault();
     const x = e.pageX;
     const y = e.pageY;
-    if (painting) {
-        ctx.lineTo(x, y);
-        ctx.stroke();
-    } else {
+    if (lastPt) {
         ctx.beginPath();
         ctx.moveTo(lastPt.x, lastPt.y);
-    }
+        ctx.lineTo(x, y);
+        ctx.stroke();
     lastPt = {x, y};
+}
+
+function onTouchStart(e) {
+    e.preventDefault();
+}
+
+function onTouchEnd(e) {
+    e.preventDefault();
+    lastPt = null;
 }
 
 init();
@@ -74,8 +79,8 @@ canvas.addEventListener("mouseup", stopPainting);
 canvas.addEventListener("mouseleave", stopPainting);
 //mobile
 canvas.addEventListener("touchmove", onTouchMove);
-canvas.addEventListener("touchstart", onMouseDown);
-canvas.addEventListener("touchend", stopPainting);
+canvas.addEventListener("touchstart", onTouchStart);
+canvas.addEventListener("touchend", onTouchEnd);
 
 
 //change lineWidth
