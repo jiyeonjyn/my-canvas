@@ -79,11 +79,16 @@ function onTouchStart(e) {
 //     e.preventDefault();
 // }
 
+function handleCM(e) {
+    e.preventDefault();
+}
+
 init();
 canvas.addEventListener("mousemove", onMouseMove);
 canvas.addEventListener("mousedown", onMouseDown);
 canvas.addEventListener("mouseup", stopPainting);
 canvas.addEventListener("mouseleave", stopPainting);
+canvas.addEventListener("contextmenu", handleCM);
 //mobile
 canvas.addEventListener("touchmove", onTouchMove);
 canvas.addEventListener("touchstart", onTouchStart);
